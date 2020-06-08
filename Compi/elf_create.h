@@ -98,24 +98,3 @@ Elf64_Phdr createProgramHeader(	Elf64_Word	entryType,
 }
 
 
-int findSizeOfFile(const char * file_name){		//returns filesize in bytes
-	
-	std::ifstream readFileStream(file_name, std::ios::out | std::ios::binary);
-	
-	if (!readFileStream){
-		std::cout << "ERROR: Cannot open file " << file_name << "\n"; //error handling
-	}
-	
-	readFileStream.ignore( std::numeric_limits<std::streamsize>::max() );
-	std::streamsize length = readFileStream.gcount();
-	readFileStream.clear();   						//not needed?
-	readFileStream.seekg( 0, std::ios_base::beg ); 	//not needed?
-	
-	if (!readFileStream.good()){
-		std::cout << "ERROR: Error reading size of file " << file_name << "\n";
-	}
-	
-	readFileStream.close();
-	
-	return (int) length;
-}

@@ -3,6 +3,34 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
+
+
+
+int findSizeOfFile(const char * file_name){		//returns filesize in bytes
+	
+	std::ifstream readFileStream(file_name, std::ios::out | std::ios::binary);
+	
+	if (!readFileStream){
+		std::cout << "ERROR: Cannot open file " << file_name << "\n"; //error handling
+	}
+	
+	readFileStream.ignore( std::numeric_limits<std::streamsize>::max() );
+	std::streamsize length = readFileStream.gcount();
+	readFileStream.clear();   						//not needed?
+	readFileStream.seekg( 0, std::ios_base::beg ); 	//not needed?
+	
+	if (!readFileStream.good()){
+		std::cout << "ERROR: Error reading size of file " << file_name << "\n";
+	}
+	
+	readFileStream.close();
+	
+	return (int) length;
+}
+
+
+
 
 void printHeader(Elf64_Ehdr printHeader){ //debug tool
 	std::cout << "Magic: ";
@@ -26,29 +54,71 @@ void printHeader(Elf64_Ehdr printHeader){ //debug tool
 }
 
 
-void writeStructPointerArrayToFileAsBinary (const char * file_name, const void** structPointerArray, int size){
-	std::ofstream fileStream(file_name, std::ios::out | std::ios::binary); //should probably live in its own function
+void createELF (const char * text_name, const char * data_name, const char * file_name, const void** structPointerArray){
+	
+	std::ofstream fileStream(file_name, std::ios::out | std::ios::binary); //open write file, should probably live in its own function
 	if (!fileStream){
 		std::cout << "ERROR: Cannot open file " << file_name << "\n"; //error handling
 	}
 	
 	
-	for(int i = 0; i < 4; i++){
-		fileStream.write((const char *) structPointerArray[i], size); //dumps binary and closes, might want to remove the close and move the open to it's own function
+	//dump header into file
+	fileStream.write((const char *) structPointerArray[0], 64);
+	
+	
+	//dump program header files
+	for(int i = 1; i < 4; i++){
+		fileStream.write((const char *) structPointerArray[i], 56); //size-8 (program header size) should probably be an argument or these should just both be hardcoded
+		//for (int j = 0; j < 8; j++){
+			//fileStream << '\0';
+		//}
 	}
-	std::ifstream readFileStream("test_text.dat", std::ios::out | std::ios::binary);
+	
+	
+	//pad until 0x1000 for .text
+	int currentSize = fileStream.tellp();
+	int neededPadding = (int)((0x1000 - currentSize));
+	
+	for (int j = 0; j < neededPadding; j++){
+			fileStream << '\0';
+		}
+	
+	
+	//dump .text @ 0x1000
+	std::ifstream readFileStream(text_name, std::ios::out | std::ios::binary);
 	char value;
 	while (readFileStream.get(value)){
 		fileStream << value;
 	}
 	readFileStream.close();
-	std::ifstream readFileStream2("test_data.dat", std::ios::out | std::ios::binary);
+	
+	
+	//pad until 0x2000
+	currentSize = fileStream.tellp();
+	neededPadding = (int)((0x2000 - currentSize));
+	
+	for (int j = 0; j < neededPadding; j++){
+			fileStream << '\0';
+		}
+	
+	
+	//dump .data @ 0x2000
+	std::ifstream readFileStream2(data_name, std::ios::out | std::ios::binary);
 	while (readFileStream2.get(value)){
 		fileStream << value;
 	}
 	readFileStream2.close();
 	
 	
+	//pad out eof to fit nicely
+	currentSize = fileStream.tellp();
+	neededPadding = (16 - (currentSize % 16));
+	
+	for (int j = 0; j < neededPadding; j++){
+			fileStream << '\0';
+		}
+	
+	//close and handle errors
 	fileStream.close();
 	if (!fileStream.good()){
 		std::cout << "ERROR: Writing to " << file_name << "\n"; //error handling
