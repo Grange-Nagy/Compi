@@ -3,6 +3,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="parseASM.h"/>
     <File Name="x86dataREADME.txt"/>
     <File Name="json.hpp"/>
     <File Name="x86data.json"/>

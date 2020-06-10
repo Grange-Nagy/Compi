@@ -3,18 +3,18 @@
 ## any manual changes will be erased      
 ##
 ## Release
-ProjectName            :=compiASM
+ProjectName            :=compiLinker
 ConfigurationName      :=Release
 WorkspaceConfiguration := $(ConfigurationName)
 WorkspacePath          :=/home/kali/Documents/Compi
-ProjectPath            :=/home/kali/Documents/Compi/compiASM
-IntermediateDirectory  :=../build-$(ConfigurationName)/compiASM
-OutDir                 :=../build-$(ConfigurationName)/compiASM
+ProjectPath            :=/home/kali/Documents/Compi/Compi
+IntermediateDirectory  :=../build-$(ConfigurationName)/Compi
+OutDir                 :=../build-$(ConfigurationName)/Compi
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=kali
-Date                   :=06/10/20
+Date                   :=06/09/20
 CodeLitePath           :=/home/kali/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -50,7 +50,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := /usr/bin/ar rcu
 CXX      := /usr/bin/g++
 CC       := /usr/bin/gcc
-CXXFLAGS :=  -O2 -Wall -std=gnu++11 $(Preprocessors)
+CXXFLAGS :=  -O2 -Wall $(Preprocessors)
 CFLAGS   :=  -O2 -Wall $(Preprocessors)
 ASFLAGS  := 
 AS       := /usr/bin/as
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=../build-$(ConfigurationName)/compiASM/compiASM.cpp$(ObjectSuffix) 
+Objects0=../build-$(ConfigurationName)/Compi/compiLinker.cpp$(ObjectSuffix) 
 
 
 
@@ -72,18 +72,18 @@ Objects=$(Objects0)
 .PHONY: all clean PreBuild PrePreBuild PostBuild MakeIntermediateDirs
 all: MakeIntermediateDirs $(OutputFile)
 
-$(OutputFile): ../build-$(ConfigurationName)/compiASM/.d $(Objects) 
-	@mkdir -p "../build-$(ConfigurationName)/compiASM"
+$(OutputFile): ../build-$(ConfigurationName)/Compi/.d $(Objects) 
+	@mkdir -p "../build-$(ConfigurationName)/Compi"
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects0)  > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@mkdir -p "../build-$(ConfigurationName)/compiASM"
+	@mkdir -p "../build-$(ConfigurationName)/Compi"
 	@mkdir -p ""../build-$(ConfigurationName)/bin""
 
-../build-$(ConfigurationName)/compiASM/.d:
-	@mkdir -p "../build-$(ConfigurationName)/compiASM"
+../build-$(ConfigurationName)/Compi/.d:
+	@mkdir -p "../build-$(ConfigurationName)/Compi"
 
 PreBuild:
 
@@ -91,16 +91,16 @@ PreBuild:
 ##
 ## Objects
 ##
-../build-$(ConfigurationName)/compiASM/compiASM.cpp$(ObjectSuffix): compiASM.cpp ../build-$(ConfigurationName)/compiASM/compiASM.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/kali/Documents/Compi/compiASM/compiASM.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/compiASM.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/compiASM/compiASM.cpp$(DependSuffix): compiASM.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/compiASM/compiASM.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/compiASM/compiASM.cpp$(DependSuffix) -MM compiASM.cpp
+../build-$(ConfigurationName)/Compi/compiLinker.cpp$(ObjectSuffix): compiLinker.cpp ../build-$(ConfigurationName)/Compi/compiLinker.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/kali/Documents/Compi/Compi/compiLinker.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/compiLinker.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/Compi/compiLinker.cpp$(DependSuffix): compiLinker.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/Compi/compiLinker.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/Compi/compiLinker.cpp$(DependSuffix) -MM compiLinker.cpp
 
-../build-$(ConfigurationName)/compiASM/compiASM.cpp$(PreprocessSuffix): compiASM.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/compiASM/compiASM.cpp$(PreprocessSuffix) compiASM.cpp
+../build-$(ConfigurationName)/Compi/compiLinker.cpp$(PreprocessSuffix): compiLinker.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/Compi/compiLinker.cpp$(PreprocessSuffix) compiLinker.cpp
 
 
--include ../build-$(ConfigurationName)/compiASM//*$(DependSuffix)
+-include ../build-$(ConfigurationName)/Compi//*$(DependSuffix)
 ##
 ## Clean
 ##

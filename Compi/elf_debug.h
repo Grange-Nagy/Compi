@@ -54,9 +54,9 @@ void printHeader(Elf64_Ehdr printHeader){ //debug tool
 }
 
 
-void createELF (const char * text_name, const char * data_name, const char * file_name, const void** structPointerArray){
+bool createELF (const char * text_name, const char * data_name, const char * file_name, const void** structPointerArray){
 	
-	std::ofstream fileStream(file_name, std::ios::out | std::ios::binary); //open write file, should probably live in its own function
+	std::ofstream fileStream(file_name, std::ios::out | std::ios::binary); //open write file, should probably live in its own function (how tf do you pass a stream?)
 	if (!fileStream){
 		std::cout << "ERROR: Cannot open file " << file_name << "\n"; //error handling
 	}
@@ -76,6 +76,7 @@ void createELF (const char * text_name, const char * data_name, const char * fil
 	
 	
 	//pad until 0x1000 for .text
+	//TODO this should pad until where the program header says
 	int currentSize = fileStream.tellp();
 	int neededPadding = (int)((0x1000 - currentSize));
 	
@@ -94,6 +95,7 @@ void createELF (const char * text_name, const char * data_name, const char * fil
 	
 	
 	//pad until 0x2000
+	//TODO this should pad until where the program header says
 	currentSize = fileStream.tellp();
 	neededPadding = (int)((0x2000 - currentSize));
 	

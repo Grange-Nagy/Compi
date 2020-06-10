@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="Compi" Version="11000" InternalType="Console">
+<CodeLite_Project Name="compiLinker" Version="11000" InternalType="Console">
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="compiLinker.cpp"/>
     <File Name="elf_debug.h"/>
     <File Name="elf_create.h"/>
     <File Name="elf64.h"/>
     <File Name="elf32.h"/>
-    <File Name="elf.cpp"/>
     <File Name="elf_common.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
@@ -100,4 +100,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
