@@ -17,41 +17,33 @@ int main(int argc, char **argv)
 	readJSON.close();
 	
 	
-	std::string asmLine[4] = {"cmp","rax","0x0a",""};
-	std::string asmLineParsed[4] = {asmLine[0], asmLine[1], asmLine[2], asmLine[3]};
+	std::string asmLine[4] = {"xor","eax","eax",""};
+	std::string * asmLineParsed = new std::string[4];
+	parseLine(x86data, asmLine, asmLineParsed);
 	
-	for (int indexLine = 1; indexLine < 4; indexLine++){
-		std::string regCheck = getRegisterClass(x86data, asmLine[indexLine]);
-		if (regCheck == "NOT REGISTER"){
-			//not a register do something
-		}else if (regCheck == "ERROR"){
-			std::cout << "ERROR PARSING OPERAND";
-		}else{
-			//is a register
-			asmLineParsed[indexLine] = regCheck;
-		}
-	}
 	
+	
+	
+	
+	//////////////////debug/////////////////////////
 	 for (int i = 0; i < 4; i++){
-		std::cout << asmLineParsed[i] << "\n"; 
+		std::cout << asmLine[i] << " "; 
 	} 
 	
-	std::string operandString;
-	if (asmLineParsed[1].front() == 'r'){
-		operandString.append("X:");
-		operandString.append(asmLineParsed[1]);
-		operandString.append("/m");
-		operandString.append(asmLineParsed[1].begin()+1, asmLineParsed[2].end());
-		operandString.append(", ");
-	}
-	operandString = "R:r64/m64, id";
-	std::cout << operandString<< "\n";
-	//https://stackoverflow.com/questions/33028955/how-to-search-for-the-value-of-an-object-in-a-json-file
-	for (const auto& instructionDataLine : x86data["instructions"]) {
-		if (instructionDataLine[0] == asmLineParsed[0] && instructionDataLine[1] == operandString) {
-			std::cout << instructionDataLine[2] << "\n" << instructionDataLine[3] << "\n" << instructionDataLine[4];
-		}
-	}
+	std::cout << "\n" << "\n";
+	
+	 for (int i = 0; i < 4; i++){
+		std::cout << asmLineParsed[i] << " "; 
+	} 
+	
+	std::cout << "\n" << "\n";
+	///////////////////////////////////////////////
+	
+	
+	
+	
+	searchForInstruction(x86data, asmLineParsed, asmLine);
+	delete[] asmLineParsed; //this should maybe be built into the search or something
 	
 	
 	
