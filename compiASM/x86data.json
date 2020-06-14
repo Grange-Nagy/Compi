@@ -207,7 +207,27 @@
     "ymm" : { "kind": "vec" , "any": "ymm"  , "names": ["ymm0-31"] },
     "zmm" : { "kind": "vec" , "any": "zmm"  , "names": ["zmm0-31"] }
   },
-
+  
+  "registerEncode": [
+    ["0000","al","ax","eax","rax","st0","mmx0","xmm0","ymm0","es","cr0","dr0"],
+	["0001","cl","cx","ecx","rcx","st1","mmx1","xmm1","ymm1","cs","cr1","dr1"],
+	["0010","dl","dx","edx","rdx","st2","mmx2","xmm2","ymm2","ss","cr2","dr2"],
+	["0011","bl","bx","ebx","rbx","st3","mmx3","xmm3","ymm3","ds","cr3","dr3"],
+	["0100","ah","sp","esp","rsp","st4","mmx4","xmm4","ymm4","fs","cr4","dr4"],
+	["0101","ch","bp","ebp","rbp","st5","mmx5","xmm5","ymm5","gs","cr5","dr5"],
+	["0110","dh","si","esi","rsi","st6","mmx6","xmm6","ymm6","","cr6","dr6"],
+	["0111","bh","di","edi","rdi","st7","mmx7","xmm7","ymm7","","cr7","dr7"],
+	["1000","r8l","r8w","r8d","r8","","mmx0","xmm8","ymm8","es","cr0","dr8"],
+	["1001","r9l","r9w","r9d","r9","","mmx1","xmm9","ymm9","cs","cr1","dr9"],
+	["1010","r10l","r10w","r10d","r10","","mmx2","xmm10","ymm10","ss","cr2","dr10"],
+	["1011","r11l","r11w","r11d","r11","","mmx3","xmm11","ymm11","ds","cr3","dr11"],
+	["1100","r12l","r12w","r12d","r12","","mmx4","xmm12","ymm12","fs","cr4","dr12"],
+	["1101","r13l","r13w","r13d","r13","","mmx5","xmm13","ymm13","gs","cr5","dr13"],
+	["1110","r14;","r14w","r14d","r14","","mmx6","xmm14","ymm14","","cr6","dr14"],
+	["1111","r15l","r15w","r15d","r15","","mmx7","xmm15","ymm15","","cr7","dr15"]
+    
+  ],
+  
   "instructions": [
     ["aaa"              , "x:<ax>"                                          , "NONE"    , "37"                           , "X86 Deprecated   OF=U SF=U ZF=U AF=W PF=U CF=W"],
     ["aas"              , "x:<ax>"                                          , "NONE"    , "3F"                           , "X86 Deprecated   OF=U SF=U ZF=U AF=W PF=U CF=W"],
